@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Your Bag — Mithila Farms</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,700;1,600&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>" />
+</head>
+<body>
+
+<div id="siteHeader"></div>
+
+<main class="container cart-page">
+  <h1 style="margin-bottom:1.6rem">Your bag <span style="color:var(--muted);font-size:1.1rem;font-weight:600">(<span id="bagCount"></span>)</span></h1>
+
+  <div class="empty-state" id="cartEmpty" hidden>
+    <div class="empty-art">🧺</div>
+    <h2>Your bag is feeling light</h2>
+    <p>Fill it with small-batch roasted makhana, honest nuts and stone-ground masalas.</p>
+    <div class="empty-actions">
+      <a href="shop.html" class="btn btn-accent">Start shopping →</a>
+      <a href="shop.html?sort=rating" class="btn btn-outline">View bestsellers</a>
+    </div>
+  </div>
+
+  <div class="cart-cols" id="cartCols">
+    <div class="panel" id="lineItems"></div>
+    <aside class="panel">
+      <h3 style="margin-bottom:.4rem">Order summary</h3>
+
+      <div class="ship-progress" id="shipProgress">
+        <div class="ship-bar"><i id="shipBarFill"></i></div>
+        <span class="ship-progress-label" id="shipProgressLabel"></span>
+      </div>
+
+      <div class="summary-row"><span>Subtotal</span><span id="sumSub"></span></div>
+      <div class="summary-row"><span>Shipping</span><span id="sumShip"></span></div>
+      <div class="summary-row save" id="discRow" hidden><span id="discLabel"></span><span id="sumDisc"></span></div>
+      <div class="summary-row total"><span>Total</span><span id="sumTotal"></span></div>
+
+      <a href="checkout.html" class="btn btn-accent btn-block" style="margin-top:1.2rem">Proceed to checkout →</a>
+      <a href="shop.html" class="btn btn-outline btn-block" style="margin-top:.7rem">Continue shopping</a>
+
+      <p style="font-size:.78rem;color:var(--muted);margin-top:1.2rem;text-align:center;display:flex;gap:.5rem;justify-content:center;align-items:center">
+        🔒 Secure checkout · UPI · Cards · NetBanking · COD
+      </p>
+    </aside>
+  </div>
+</main>
+
+<div id="siteFooter"></div>
+
+<script src="js/data.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+<script src="js/cart-ui.js"></script>
+<script>
+function totals() {
+  const sub = Cart.subtotal();
+  const disc = sub >= 2500 ? Math.round(sub * 0.1) : 0;
+  const ship = Cart.shipping();
+  return { sub, disc, ship, total: sub - disc + ship };
+}
+function renderCartPage() {
+  const items = Cart.read();
+  const empty = $("#cartEmpty"), cols = $("#cartCols");
+  if (!items.length) {
+    empty.hidden = false;
+    cols.style.display = "none";
+    $("#bagCount").textContent = "0";
+    return;
+  }
+  empty.hidden = true;
+  cols.style.display = "";
+  $("#bagCount").textContent = items.reduce((a, l) => a + l.qty, 0);
+  $("#lineItems").innerHTML = items
+    .map((l, i) => `
+    <div class="cart-line" style="padding:.9rem 0;border-bottom:1px dashed var(--line)">
+      <div class="cart-line-art" style="background:linear-gradient(135deg,${l.hue.split(",")[0]},${l.hue.split(",")[1]})">${l.img ? `<img src="${l.img}" alt="" onerror="this.remove()">` : l.emoji}</div>
+      <div class="cart-line-info">
+        <div style="font-weight:700;font-size:.95rem">${l.name}</div>
+        <div class="cart-line-meta">${l.size} · ${money(l.price)} each</div>
+        <button class="line-remove" data-rm="${i}">Remove</button>
+      </div>
+      <div style="text-align:right">
+        <div class="qty-stepper"><button data-q="-1" data-i="${i}" aria-label="Decrease">−</button><span>${l.qty}</span><button data-q="1" data-i="${i}" aria-label="Increase">+</button></div>
+        <div class="cart-line-price" style="margin-top:4px;font-size:.95rem">${money(l.price * l.qty)}</div>
+      </div>
+    </div>`)
+    .join("");
+
+  const t = totals();
+
+  // free-shipping progress
+  const pct = Math.min(100, Math.round((t.sub / FREE_SHIP_ABOVE) * 100));
+  $("#shipBarFill").style.width = pct + "%";
+  $("#shipProgressLabel").innerHTML =
+    t.sub >= FREE_SHIP_ABOVE
+      ? `<b class="save-text">🎉 You've unlocked FREE shipping!</b>`
+      : `Add <b>${money(FREE_SHIP_ABOVE - t.sub)}</b> more for FREE shipping`;
+
+  // discount applied / nudge
+  if (t.disc) {
+    $("#discRow").hidden = false;
+    $("#discLabel").textContent = "🎉 Extra 10% off applied";
+    $("#sumDisc").textContent = "− " + money(t.disc);
+  } else if (t.sub >= 1000 && t.sub < 2500) {
+    $("#discRow").hidden = false;
+    $("#discLabel").innerHTML = `Add <b>${money(2500 - t.sub)}</b> more for extra 10% off`;
+    $("#sumDisc").textContent = "";
+  } else {
+    $("#discRow").hidden = true;
+  }
+
+  $("#sumSub").textContent = money(t.sub);
+  $("#sumShip").innerHTML = t.ship === 0 ? '<span class="free">FREE</span>' : money(t.ship);
+  $("#sumTotal").textContent = money(t.total);
+}
+document.addEventListener("DOMContentLoaded", renderCartPage);
+document.addEventListener("cart:change", renderCartPage);
+</script>
+</body>
+</html>

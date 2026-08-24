@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About Us — Mithila Farms</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,700;1,600&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>" />
+</head>
+<body>
+
+<div id="siteHeader"></div>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">Our story · Our promise</span>
+    <h1>Simply good food,<br/>fairly farmed.</h1>
+    <p>Mithila Farms was born in Madhubani, Bihar — the makhana capital of the world — with one simple idea: the farmer who grows your food deserves as much care as the customer who eats it.</p>
+  </div>
+</section>
+
+<section style="padding:1rem 0 3rem">
+  <div class="container">
+    <div class="video-frame">
+      <video id="brandFilm" preload="metadata" playsinline src="assets/brand-film.mp4"></video>
+      <div class="video-overlay" id="playOverlay">
+        <div>
+          <div class="play"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+          <h3>What is Mithila Farms?</h3>
+          <p>Tap to play — our brand film explains everything</p>
+        </div>
+      </div>
+      <div id="filmMissing" class="video-overlay" hidden style="cursor:default;background:rgba(18,39,26,.93)">
+        <div>
+          <h3>Brand film slot ready</h3>
+          <p>Add your video as <b>assets/brand-film.mp4</b><br/>or swap the source URL inside about.html.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-bottom:3.4rem">
+  <div class="container">
+    <div class="tabs" role="tablist">
+      <button class="tab-btn on" data-tab="story">Our Story</button>
+      <button class="tab-btn" data-tab="sourcing">How We Source</button>
+      <button class="tab-btn" data-tab="quality">Quality Promise</button>
+    </div>
+
+    <div class="tab-panel on" id="tab-story">
+      <div class="story-split" style="padding-top:.6rem">
+        <div>
+          <h2 class="section-title">It started at a pond in Rajnagar.</h2><br/>
+          <p style="color:var(--muted);margin-bottom:1rem">In 2019, our founder watched a farmer sell a full day's makhana harvest to a middleman for less than what one retail pack sells for in Delhi. That math never made sense — so we decided to fix it.</p>
+          <p style="color:var(--muted)">We began buying directly from four families. Today we partner with 120+ farming households across six districts of the Mithila belt, paying 20–30% above mandi rates and settling within 48 hours. On your side of the bag, that means makhana that is roasted — never fried — with labels you can actually read aloud.</p>
+        </div>
+        <div>
+          <ul class="check-list">
+            <li><span><b>2020</b> — First direct purchase: 400 kg from 4 families in Rajnagar, Madhubani.</span></li>
+            <li><span><b>2022</b> — Grading &amp; roasting facility set up in Madhubani town.</span></li>
+            <li><span><b>2024</b> — 100th farming family onboarded; B2B supply begins.</span></li>
+            <li><span><b>2026</b> — 6 flavoured SKUs, natural range, nuts &amp; spices. Retail + bulk across India.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tab-sourcing">
+      <div class="grid-products" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:.6rem">
+        <article class="card" style="padding:1.4rem"><h3 style="font-size:1.05rem">🤝 Pre-season contracts</h3><p style="font-size:.86rem;color:var(--muted);margin-top:.5rem">Price and volume agreed before the season starts, so farmers can plan with certainty.</p></article>
+        <article class="card" style="padding:1.4rem"><h3 style="font-size:1.05rem">⚖️ Transparent weighing</h3><p style="font-size:.86rem;color:var(--muted);margin-top:.5rem">Lots weighed together with the farmer and logged digitally — no hidden deductions.</p></article>
+        <article class="card" style="padding:1.4rem"><h3 style="font-size:1.05rem">🏦 48-hour payments</h3><p style="font-size:.86rem;color:var(--muted);margin-top:.5rem">Direct UPI/bank transfer within two working days. Zero middlemen commissions.</p></article>
+        <article class="card" style="padding:1.4rem"><h3 style="font-size:1.05rem">🛠️ Free inputs</h3><p style="font-size:.86rem;color:var(--muted);margin-top:.5rem">Drying racks, tarpaulins, solar dryers and grading training — provided at our cost.</p></article>
+      </div>
+      <div style="text-align:center;margin-top:2rem">
+        <a href="farmers.html" class="btn btn-primary">Meet the farming families →</a>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tab-quality">
+      <div class="grid-products" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:.6rem">
+        <article class="card" style="padding:1.4rem"><h3 style="font-size:1.05rem">✋ Hand-graded</h3><p style="font-size:.86rem;color:var(--muted);margin-top:.5rem">Every lot hand-sorted by size and whiteness before roasting.</p></article>
+        <article class="card" style="padding:1.4rem"><h3 style="font-size:1.05rem">🔥 Roasted, not fried</h3><p style="font-size:.86rem;color:var(--muted);margin-top:.5rem">Dry-roasted or tossed in cold-pressed oils. No palm oil, ever.</p></article>
+        <article class="card" style="padding:1.4rem"><h3 style="font-size:1.05rem">🧪 Lab-tested lots</h3><p style="font-size:.86rem;color:var(--muted);margin-top:.5rem">Periodic NABL-lab testing for moisture, peroxide value and contaminants.</p></article>
+        <article class="card" style="padding:1.4rem"><h3 style="font-size:1.05rem">💨 Nitrogen-flushed</h3><p style="font-size:.86rem;color:var(--muted);margin-top:.5rem">Packed nitrogen-flushed for a 6-month crunch guarantee.</p></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="siteFooter"></div>
+
+<script src="js/data.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+<script src="js/cart-ui.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  $$(".tab-btn").forEach((btn) =>
+    btn.addEventListener("click", () => {
+      $$(".tab-btn").forEach((b) => b.classList.remove("on"));
+      $$(".tab-panel").forEach((p) => p.classList.remove("on"));
+      btn.classList.add("on");
+      $("#tab-" + btn.dataset.tab).classList.add("on");
+    })
+  );
+
+  const film = $("#brandFilm");
+  const overlay = $("#playOverlay");
+  const missing = $("#filmMissing");
+
+  film.addEventListener("error", () => {
+    overlay.hidden = true;
+    missing.hidden = false;
+  });
+
+  overlay.addEventListener("click", () => {
+    if (film.readyState >= 2 || film.networkState !== 3) {
+      overlay.style.display = "none";
+      film.controls = true;
+      film.play().catch(() => { overlay.style.display = ""; });
+    } else {
+      overlay.hidden = true;
+      missing.hidden = false;
+    }
+  });
+});
+</script>
+</body>
+</html>
